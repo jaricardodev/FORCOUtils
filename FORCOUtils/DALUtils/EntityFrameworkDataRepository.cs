@@ -416,7 +416,6 @@ namespace FORCOUtils.DALUtils
             {
                 MethodBase _MetodInfo = MethodInfo.GetCurrentMethod();
                 throw HandleException(_Exception, _MetodInfo);
-
             }
         }
 
