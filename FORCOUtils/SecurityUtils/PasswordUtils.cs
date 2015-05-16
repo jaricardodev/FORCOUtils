@@ -19,7 +19,7 @@ namespace FORCOUtils.SecurityUtils
         /// </summary>
         /// <param name="aString">String to encrypt</param>
         /// <returns>Encrypted text</returns>
-        public string Encrypt(string aString)
+        public string EncryptTwoWay(string aString)
         {
 
             byte[] _InputBytes = Encoding.ASCII.GetBytes(aString);
@@ -44,7 +44,7 @@ namespace FORCOUtils.SecurityUtils
         /// </summary>
         /// <param name="aString">String to decrypt</param>
         /// <returns>original text</returns>
-        public string Decrypt(string aString)
+        public string DecryptTwoWay(string aString)
         {
             byte[] _InputBytes = Convert.FromBase64String(aString);
             string _CleanText;
@@ -60,6 +60,22 @@ namespace FORCOUtils.SecurityUtils
                 }
             }
             return _CleanText;
+        }
+
+        /// <author>Marlon Gonzalez Gongora-nickoo1987@gmail.com</author>
+        /// <summary>
+        /// Encrypt a string using SHA1CryptoServiceProvider
+        /// </summary>
+        /// <param name="aString">String to encrypt</param>
+        /// <returns>original text</returns>
+        public string EncryptOneWay(string aString)
+        {
+            const string _Salt = "Bl1ndEncr4pti0n";
+            SHA1CryptoServiceProvider _Crypto = new SHA1CryptoServiceProvider();
+            byte[] _TextWithSaltBytes = Encoding.UTF8.GetBytes(string.Concat(aString, _Salt));
+            byte[] _HashedBytes = _Crypto.ComputeHash(_TextWithSaltBytes);
+            _Crypto.Clear();
+            return Convert.ToBase64String(_HashedBytes);
         }
     }
 }
