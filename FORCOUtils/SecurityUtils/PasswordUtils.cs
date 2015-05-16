@@ -13,6 +13,12 @@ namespace FORCOUtils.SecurityUtils
         private readonly byte[] fKey = Encoding.ASCII.GetBytes("Bl1ndEncr4pti0n");
         private readonly byte[] fIv = Encoding.ASCII.GetBytes("Devjoker7.37hAES");
 
+        /// <author>Marlon Gonzalez Gongora-nickoo1987@gmail.com</author>
+        /// <summary>
+        /// Encrypts a string using the Rijndael algorithm
+        /// </summary>
+        /// <param name="aString">String to encrypt</param>
+        /// <returns>Encrypted text</returns>
         public string Encrypt(string aString)
         {
 
@@ -32,6 +38,12 @@ namespace FORCOUtils.SecurityUtils
             return Convert.ToBase64String(_Encripted);
         }
 
+        /// <author>Marlon Gonzalez Gongora-nickoo1987@gmail.com</author>
+        /// <summary>
+        /// Decrypt a string using the Rijndael algorithm
+        /// </summary>
+        /// <param name="aString">String to decrypt</param>
+        /// <returns>original text</returns>
         public string Decrypt(string aString)
         {
             byte[] _InputBytes = Convert.FromBase64String(aString);
