@@ -20,17 +20,23 @@ namespace FORCOUtils.DALUtils
             
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
         /// <summary>
-        /// 
+        /// Builds up an instance of this repository
         /// </summary>
-        /// <param name="aContext"></param>
-        /// <param name="aDisposeContextOnEveryAction"></param>
+        /// <param name="aContext">The DbContext instance holding your entities</param>
+        /// <param name="aDisposeContextOnEveryAction">If true the passed context will be disposed after every action. If false you'll need to dispose this context using the Dispose method</param>
         public EntityFrameworkDataRepository(DbContext aContext, bool aDisposeContextOnEveryAction = true)
         {
             fDisposeContextOnEveryAction = aDisposeContextOnEveryAction;
             fContext = aContext;
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        ///  <summary>
+        ///  Fetch objects of specified type from the repository source
+        ///  </summary>
+        /// <returns>IList of objects with all the objects of the specified type on the repository</returns>
         public IList<T> GetAll()
         {
             try
@@ -60,34 +66,84 @@ namespace FORCOUtils.DALUtils
             }
         }
 
+        ///<author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        /// Fetch objects of specified type from the repository source
+        /// </summary>
+        /// <typeparam name="TU">The type for the selected object to return</typeparam>
+        /// <param name="aSelectFunc">A select function to return a new type only with specified fields</param>
+        /// <returns>IList of new objects created from the list of all objects in the repository and converted to the select function out type</returns>
         public IList<TU> GetAllWithSelect<TU>(Func<T, TU> aSelectFunc) where TU : class
         {
             throw new NotImplementedException();
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        ///  Fetch objects of specified type from the repository source in a specific order
+        ///  </summary>
+        /// <param name="aOrderFunc">Sets the  order by funtion for the collection</param>
+        /// <param name="aOrderFunctionType">Sets the ordering type for the collection</param>
+        /// <returns>IList of objects with all the objects of the specified type on the repository</returns>
         public IList<T> GetAll(Func<T, object> aOrderFunc, OrderFunctionType aOrderFunctionType)
         {
             throw new NotImplementedException();
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        /// Fetch objects from the source and selects from them some specific fields in a specific order
+        /// </summary>
+        /// <typeparam name="TU">The type for the selected object to return</typeparam>
+        /// <param name="aOrderFunc">Sets the  order by funtion for the collection</param>
+        /// <param name="aOrderFunctionType">Sets the ordering type for the collection</param>
+        /// <param name="aSelectFunc">A select function to return a new type only with specified fields</param>
+        /// <returns>IList of new objects created from the list of all objects in the repository and converted to the select function out type in a specific order</returns>
         public IList<TU> GetAllWithSelect<TU>(Func<T, object> aOrderFunc, Func<T, TU> aSelectFunc, OrderFunctionType aOrderFunctionType) where TU : class
         {
             throw new NotImplementedException();
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        ///  Fetch objects of specified  type from the repository source in a specific order and using pagination
+        /// </summary>
+        /// <param name="aPage">Sets the page to load</param>
+        /// <param name="aCount">Sets the number of items per page to load</param>
+        /// <param name="aPageCount">Returns the number of pages after fetchig the results</param>
+        /// <param name="aOrderFunc">Sets the  order by funtion for the collection</param>
+        /// <param name="aOrderFunctionType">Sets the ordering type for the collection</param>
+        /// <returns>IList of objects with all the objects of the specified type on the repository</returns>
         public IList<T> GetAll(int aPage, int aCount, out int aPageCount, Func<T, object> aOrderFunc, OrderFunctionType aOrderFunctionType)
         {
             throw new NotImplementedException();
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        /// Fetch objects from the source and selects from them some specific fields in a specific order and using pagination
+        /// </summary>
+        /// <typeparam name="TU">The type for the selected object to return</typeparam>
+        /// <param name="aPage">Sets the page to load</param>
+        /// <param name="aCount">Sets the number of items per page to load</param>
+        /// <param name="aPageCount">Returns the number of pages after fetchig the results</param>
+        /// <param name="aOrderFunc">Sets the  order by funtion for the collection</param>
+        /// <param name="aSelectFunc">A select function to return a new type only with specified fields</param>
+        /// <param name="aOrderFunctionType">Sets the ordering type for the collection</param>
+        /// <returns>IList of new objects created from the list of all objects in the repository and converted to the select function out type in a specific order and using pagination</returns>
         public IList<TU> GetAllWithSelect<TU>(int aPage, int aCount, out int aPageCount, Func<T, object> aOrderFunc, Func<T, TU> aSelectFunc,
             OrderFunctionType aOrderFunctionType)
         {
             throw new NotImplementedException();
         }
 
-        
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        ///  <summary>
+        ///  Fetch objects of specified type from the repository source
+        ///  </summary>
+        /// <param name="aNavigationProperties">The properties to include on the lazy loading</param>
+        /// <returns>IList of objects with all the objects of the specified type on the repository. Lazy loading used</returns>
         public IList<T> GetAllLazyLoading(params Expression<Func<T, object>>[] aNavigationProperties)
         {
             try
@@ -118,6 +174,14 @@ namespace FORCOUtils.DALUtils
         }
 
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        ///  <summary>
+        ///  Fetch objects fomr the source and selects from them some specific fields
+        ///  </summary>
+        ///  <typeparam name="TU">The type for the selected object to return</typeparam>
+        ///  <param name="aSelectFunc">A select function to return a new type only with specified fields</param>
+        /// <param name="aNavigationProperties">The properties to include on the lazy loading</param>
+        /// <returns>IList of new objects created from the list of all objects in the repository and converted to the select function out type. Lazy loading used</returns>
         public IList<TU> GetAllLazyLoadingWithSelect<TU>(Func<T, TU> aSelectFunc, params Expression<Func<T, object>>[] aNavigationProperties) where TU : class
         {
             try
@@ -146,6 +210,14 @@ namespace FORCOUtils.DALUtils
             }
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        ///  Fetch objects of specified type from the repository source in a specific order
+        ///  </summary>
+        /// <param name="aOrderFunc">Sets the  order by funtion for the collection</param>
+        /// <param name="aOrderFunctionType">Sets the ordering type for the collection</param>
+        /// <param name="aNavigationProperties">The properties to include on the lazy loading</param>
+        /// <returns>IList of objects with all the objects of the specified type on the repository. Lazy loading used</returns>
         public IList<T> GetAllLazyLoading(Func<T, object> aOrderFunc, OrderFunctionType aOrderFunctionType, params Expression<Func<T, object>>[] aNavigationProperties)
         {
             try
@@ -172,6 +244,16 @@ namespace FORCOUtils.DALUtils
             }
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        /// Fetch objects from the source and selects from them some specific fields in a specific order
+        /// </summary>
+        /// <typeparam name="TU">The type for the selected object to return</typeparam>
+        /// <param name="aOrderFunc"></param>
+        /// <param name="aOrderFunctionType"></param>
+        /// <param name="aSelectFunc">A select function to return a new type only with specified fields</param>
+        /// <param name="aNavigationProperties">The properties to include on the lazy loading</param>
+        /// <returns>IList of new objects created from the list of all objects in the repository and converted to the select function out type in a specific order. Lazy loading used</returns>
         public IList<TU> GetAllLazyLoadingWithSelect<TU>(Func<T, object> aOrderFunc, Func<T, TU> aSelectFunc, OrderFunctionType aOrderFunctionType,
             params Expression<Func<T, object>>[] aNavigationProperties) where TU : class
         {
@@ -201,6 +283,17 @@ namespace FORCOUtils.DALUtils
             }
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        ///  Fetch objects of specified  type from the repository source in a specific order and using pagination
+        /// </summary>
+        /// <param name="aPage">Sets the page to load</param>
+        /// <param name="aCount">Sets the number of items per page to load</param>
+        /// <param name="aPageCount">Returns the number of pages after fetchig the results</param>
+        /// <param name="aOrderFunc">Sets the  order by funtion for the collection</param>
+        /// <param name="aOrderFunctionType">Sets the ordering type for the collection</param>
+        /// <param name="aNavigationProperties">The properties to include on the lazy loading</param>
+        /// <returns>IList of objects with all the objects of the specified type on the repository. Lazy loading used</returns>
         public IList<T> GetAllLazyLoading(int aPage, int aCount, out int aPageCount, Func<T, object> aOrderFunc, OrderFunctionType aOrderFunctionType,
             params Expression<Func<T, object>>[] aNavigationProperties)
         {
@@ -239,6 +332,19 @@ namespace FORCOUtils.DALUtils
             }
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        /// Fetch objects from the source and selects from them some specific fields in a specific order and using pagination
+        /// </summary>
+        /// <typeparam name="TU">The type for the selected object to return</typeparam>
+        /// <param name="aPage">Sets the page to load</param>
+        /// <param name="aCount">Sets the number of items per page to load</param>
+        /// <param name="aPageCount">Returns the number of pages after fetchig the results</param>
+        /// <param name="aOrderFunc">Sets the  order by funtion for the collection</param>
+        /// <param name="aSelectFunc">A select function to return a new type only with specified fields</param>
+        /// <param name="aOrderFunctionType">Sets the ordering type for the collection</param>
+        /// <param name="aNavigationProperties">The properties to include on the lazy loading</param>
+        /// <returns>IList of new objects created from the list of all objects in the repository and converted to the select function out type in a specific order and using pagination</returns>
         public IList<TU> GetAllLazyLoadingWithSelect<TU>(int aPage, int aCount, out int aPageCount, Func<T, object> aOrderFunc, Func<T, TU> aSelectFunc,
             OrderFunctionType aOrderFunctionType, params Expression<Func<T, object>>[] aNavigationProperties)
         {
@@ -276,22 +382,53 @@ namespace FORCOUtils.DALUtils
             }
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        ///  <summary>
+        ///  Fetch objects of specified type from the repository source
+        ///  </summary>
+        /// <param name="aWhere">Boolean expression to filter the list to return</param>
+        /// <returns>IList of objects with objects of the specified type on the repository according to boolean expression</returns>
         public IList<T> GetList(Func<T, bool> aWhere)
         {
             throw new NotImplementedException();
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        ///  <summary>
+        ///  Fetch objects of specified type from the repository source
+        ///  </summary>
+        /// <param name="aWhere">Boolean expression to filter the list to return</param>
+        /// <param name="aSelectFunc">A select function to return a new type only with specified fields</param>
+        /// <returns>IList of objects with objects of the specified type on the repository according to boolean expression</returns>
         public IList<TU> GetListWithSelect<TU>(Func<T, bool> aWhere, Func<T, TU> aSelectFunc) where TU : class
         {
             throw new NotImplementedException();
         }
 
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        ///  Fetch objects of specified type from the repository source in a specific order
+        ///  </summary>
+        /// <param name="aWhere">Boolean expression to filter the list to return</param>
+        /// <param name="aOrderFunc">Sets the  order by funtion for the collection</param>
+        /// <param name="aOrderFunctionType">Sets the ordering type for the collection</param>
+        /// <returns>IList of objects with objects of the specified type on the repository according to boolean expression</returns>
         public IList<T> GetList(Func<T, bool> aWhere, Func<T, object> aOrderFunc, OrderFunctionType aOrderFunctionType)
         {
             throw new NotImplementedException();
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        /// Fetch objects from the source and selects from them some specific fields in a specific order
+        /// </summary>
+        /// <typeparam name="TU">The type for the selected object to return</typeparam>
+        /// <param name="aWhere">Boolean expression to filter the list to return</param>
+        /// <param name="aOrderFunc">Sets the  order by funtion for the collection</param>
+        /// <param name="aOrderFunctionType">Sets the ordering type for the collection</param>
+        /// <param name="aSelectFunc">A select function to return a new type only with specified fields</param>
+        /// <returns>IList of new objects created from the list of objects in the repository according to boolean expression and converted to the select function out type in a specific order</returns>
         public IList<TU> GetListWithSelect<TU>(Func<T, bool> aWhere, Func<T, object> aOrderFunc, Func<T, TU> aSelectFunc, OrderFunctionType aOrderFunctionType) where TU : class
         {
             try
@@ -318,13 +455,36 @@ namespace FORCOUtils.DALUtils
         }
 
 
-
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        ///  Fetch objects of specified  type from the repository source in a specific order and using pagination
+        /// </summary>
+        /// <param name="aWhere">Boolean expression to filter the list to return</param>
+        /// <param name="aPage">Sets the page to load</param>
+        /// <param name="aCount">Sets the number of items per page to load</param>
+        /// <param name="aPageCount">Returns the number of pages after fetchig the results</param>
+        /// <param name="aOrderFunc">Sets the  order by funtion for the collection</param>
+        /// <param name="aOrderFunctionType">Sets the ordering type for the collection</param>
+        /// <returns>IList of objects with objects of the specified type on the repository according to boolean expression with specific order and using pagination</returns>
         public IList<T> GetList(Func<T, bool> aWhere, int aPage, int aCount, out int aPageCount, Func<T, object> aOrderFunc,
             OrderFunctionType aOrderFunctionType)
         {
             throw new NotImplementedException();
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        /// Fetch objects from the source and selects from them some specific fields in a specific order and using pagination
+        /// </summary>
+        /// <typeparam name="TU">The type for the selected object to return</typeparam>
+        /// <param name="aWhere">Boolean expression to filter the list to return</param>
+        /// <param name="aPage">Sets the page to load</param>
+        /// <param name="aCount">Sets the number of items per page to load</param>
+        /// <param name="aPageCount">Returns the number of pages after fetchig the results</param>
+        /// <param name="aOrderFunc">Sets the  order by funtion for the collection</param>
+        /// <param name="aSelectFunc">A select function to return a new type only with specified fields</param>
+        /// <param name="aOrderFunctionType">Sets the ordering type for the collection</param>
+        /// <returns>IList of new objects created from the list of all objects in the repository and converted to the select function out type in a specific order and using pagination</returns>
         public IList<TU> GetListWithSelect<TU>(Func<T, bool> aWhere, int aPage, int aCount, out int aPageCount, Func<T, object> aOrderFunc, Func<T, TU> aSelectFunc,
             OrderFunctionType aOrderFunctionType)
         {
@@ -332,7 +492,13 @@ namespace FORCOUtils.DALUtils
         }
 
 
-
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        ///  <summary>
+        ///  Fetch objects of specified type from the repository source
+        ///  </summary>
+        /// <param name="aWhere">Boolean expression to filter the list to return</param>
+        /// <param name="aNavigationProperties">The properties to include on the lazy loading</param>
+        /// <returns>IList of objects with objects of the specified type on the repository according to boolean expression. Lazy loading used</returns>
         public IList<T> GetListLazyLoading(Func<T, bool> aWhere, params Expression<Func<T, object>>[] aNavigationProperties)
         {
             try
@@ -362,6 +528,14 @@ namespace FORCOUtils.DALUtils
             }
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        ///  <summary>
+        ///  Fetch objects of specified type from the repository source
+        ///  </summary>
+        /// <param name="aWhere">Boolean expression to filter the list to return</param>
+        /// <param name="aSelectFunc">A select function to return a new type only with specified fields</param>
+        /// <param name="aNavigationProperties">The properties to include on the lazy loading</param>
+        /// <returns>IList of objects with objects of the specified type on the repository according to boolean expression. Lazy loading used</returns>
         public IList<TU> GetListWithSelectLazyLoading<TU>(Func<T, bool> aWhere, Func<T, TU> aSelectFunc, params Expression<Func<T, object>>[] aNavigationProperties) where TU : class
         {
             try
@@ -391,6 +565,15 @@ namespace FORCOUtils.DALUtils
             }
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        ///  Fetch objects of specified type from the repository source in a specific order
+        ///  </summary>
+        /// <param name="aWhere">Boolean expression to filter the list to return</param>
+        /// <param name="aOrderFunc">Sets the  order by funtion for the collection</param>
+        /// <param name="aOrderFunctionType">Sets the ordering type for the collection</param>
+        /// <param name="aNavigationProperties">The properties to include on the lazy loading</param>
+        /// <returns>IList of objects with objects of the specified type on the repository according to boolean expression. Lazy loading used</returns>
         public IList<T> GetListLazyLoading(Func<T, bool> aWhere, Func<T, object> aOrderFunc, OrderFunctionType aOrderFunctionType, params Expression<Func<T, object>>[] aNavigationProperties)
         {
             try
@@ -419,6 +602,17 @@ namespace FORCOUtils.DALUtils
             }
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        /// Fetch objects from the source and selects from them some specific fields in a specific order
+        /// </summary>
+        /// <typeparam name="TU">The type for the selected object to return</typeparam>
+        /// <param name="aWhere">Boolean expression to filter the list to return</param>
+        /// <param name="aOrderFunc">Sets the  order by funtion for the collection</param>
+        /// <param name="aOrderFunctionType">Sets the ordering type for the collection</param>
+        /// <param name="aSelectFunc">A select function to return a new type only with specified fields</param>
+        /// <param name="aNavigationProperties">The properties to include on the lazy loading</param>
+        /// <returns>IList of new objects created from the list of objects in the repository according to boolean expression and converted to the select function out type in a specific order. Lazy loading used</returns>
         public IList<TU> GetListWithSelectLazyLoading<TU>(Func<T, bool> aWhere, Func<T, object> aOrderFunc, Func<T, TU> aSelectFunc, OrderFunctionType aOrderFunctionType,
             params Expression<Func<T, object>>[] aNavigationProperties) where TU : class
         {
@@ -449,6 +643,18 @@ namespace FORCOUtils.DALUtils
             }
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        ///  Fetch objects of specified  type from the repository source in a specific order and using pagination
+        /// </summary>
+        /// <param name="aWhere">Boolean expression to filter the list to return</param>
+        /// <param name="aPage">Sets the page to load</param>
+        /// <param name="aCount">Sets the number of items per page to load</param>
+        /// <param name="aPageCount">Returns the number of pages after fetchig the results</param>
+        /// <param name="aOrderFunc">Sets the  order by funtion for the collection</param>
+        /// <param name="aOrderFunctionType">Sets the ordering type for the collection</param>
+        /// <param name="aNavigationProperties">The properties to include on the lazy loading</param>
+        /// <returns>IList of objects with objects of the specified type on the repository according to boolean expression with specific order and using pagination. Lazy loading used</returns>
         public IList<T> GetListLazyLoading(Func<T, bool> aWhere, int aPage, int aCount, out int aPageCount, Func<T, object> aOrderFunc,
             OrderFunctionType aOrderFunctionType, params Expression<Func<T, object>>[] aNavigationProperties)
         {
@@ -486,6 +692,20 @@ namespace FORCOUtils.DALUtils
             }
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        /// Fetch objects from the source and selects from them some specific fields in a specific order and using pagination
+        /// </summary>
+        /// <typeparam name="TU">The type for the selected object to return</typeparam>
+        /// <param name="aWhere">Boolean expression to filter the list to return</param>
+        /// <param name="aPage">Sets the page to load</param>
+        /// <param name="aCount">Sets the number of items per page to load</param>
+        /// <param name="aPageCount">Returns the number of pages after fetchig the results</param>
+        /// <param name="aOrderFunc">Sets the  order by funtion for the collection</param>
+        /// <param name="aSelectFunc">A select function to return a new type only with specified fields</param>
+        /// <param name="aOrderFunctionType">Sets the ordering type for the collection</param>
+        /// <param name="aNavigationProperties">The properties to include on the lazy loading</param>
+        /// <returns>IList of new objects created from the list of all objects in the repository and converted to the select function out type in a specific order and using pagination. Lazy loading used</returns>
         public IList<TU> GetListWithSelectLazyLoading<TU>(Func<T, bool> aWhere, int aPage, int aCount, out int aPageCount, Func<T, object> aOrderFunc, Func<T, TU> aSelectFunc,
             OrderFunctionType aOrderFunctionType, params Expression<Func<T, object>>[] aNavigationProperties)
         {
@@ -523,6 +743,11 @@ namespace FORCOUtils.DALUtils
             }
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        /// Fetch a single object from the source
+        /// </summary>
+        /// <returns>The frist object in the source or null if none exist</returns>
         public T GetSingle()
         {
             try
@@ -553,21 +778,47 @@ namespace FORCOUtils.DALUtils
             }
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        /// Fetch a single object from the source
+        /// </summary>
+        /// <param name="aWhere">Boolean expression to filter the object to return</param>
+        /// <returns>A single object with all associated objects to it</returns>
         public T GetSingle(Func<T, bool> aWhere)
         {
             throw new NotImplementedException();
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        /// Fetch a single object from the source
+        /// </summary>
+        /// <typeparam name="TU">The type for the selected object to return</typeparam>
+        /// <param name="aWhere">Boolean expression to filter the object to return</param>
+        /// <returns>A single object according to select function out type</returns>
         public TU GetSingle<TU>(Func<T, bool> aWhere) where TU : class
         {
             throw new NotImplementedException();
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        /// Fetch a single object from the source
+        /// </summary>
+        /// <param name="aNavigationProperties">The properties to include on the lazy loading</param>
+        /// <returns>A single object with all associated objects to it</returns>
         public T GetSingleLazyLoading(params Expression<Func<T, object>>[] aNavigationProperties)
         {
             throw new NotImplementedException();
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        /// Fetch a single object from the source
+        /// </summary>
+        /// <param name="aWhere">Boolean expression to filter the object to return</param>
+        /// <param name="aNavigationProperties">The properties to include on the lazy loading</param>
+        /// <returns>A single object with all associated objects to it. Lazy Loading used</returns>
         public T GetSingleLazyLoading(Func<T, bool> aWhere, params Expression<Func<T, object>>[] aNavigationProperties)
         {
             try
@@ -598,6 +849,14 @@ namespace FORCOUtils.DALUtils
             }
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        /// Fetch a single object from the source
+        /// </summary>
+        /// <typeparam name="TU">The type for the selected object to return</typeparam>
+        /// <param name="aWhere">Boolean expression to filter the object to return</param>
+        /// <param name="aNavigationProperties">The properties to include on the lazy loading</param>
+        /// <returns>A single object according to select function out type. Lazy Loading used</returns>
         public TU GetSingleLazyLoading<TU>(Func<T, bool> aWhere, params Expression<Func<T, object>>[] aNavigationProperties) where TU : class
         {
             try
@@ -679,6 +938,11 @@ namespace FORCOUtils.DALUtils
             
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        /// Adds new items to the source
+        /// </summary>
+        /// <param name="aItems">The items to add</param>
         public void Add(params T[] aItems)
         {
             try
@@ -704,6 +968,11 @@ namespace FORCOUtils.DALUtils
             }
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        /// Updates items on the source
+        /// </summary>
+        /// <param name="aItems">The items to update</param>
         public void Update(params T[] aItems)
         {
             try
@@ -730,6 +999,11 @@ namespace FORCOUtils.DALUtils
             }
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        /// Removes items from the source
+        /// </summary>
+        /// <param name="aItems"></param>
         public void Remove(params T[] aItems)
         {
             try
@@ -757,6 +1031,10 @@ namespace FORCOUtils.DALUtils
             }
         }
 
+        /// <author>Jose Alexis Hernandez-jahernandezricardo@gmail.com</author>
+        /// <summary>
+        /// Removes all items from the source
+        /// </summary>
         public void RemoveAll()
         {
             try

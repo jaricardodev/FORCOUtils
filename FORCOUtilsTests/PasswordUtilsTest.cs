@@ -10,11 +10,11 @@ namespace FORCOUtilsTests
         [TestMethod]
         public void TestPasswordEncryptDecrypt()
         {
-            const string _OriginalText = "testo de prueba";
+            const string _OriginalText = "admin@gmail.comadmin";
             PasswordUtils _Utils = new PasswordUtils();
             String _Ciphertext = _Utils.EncryptOneWay(_OriginalText);
-           
-            Assert.AreEqual(_OriginalText, _Utils.DecryptTwoWay(_Ciphertext));
+
+            Assert.AreEqual(_Ciphertext, _Utils.EncryptOneWay(_OriginalText));
         }
     }
 }
